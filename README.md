@@ -3,9 +3,9 @@
 ### Class Diagram For Movie Booking System
 
 For Movie Management System We have following use case diagram:
-![use case diagram](Images/FWF_ClassDiagram.jpg)
+![use case diagram](Images/MBS_ClassDiagram.jpg)
 
-### USECase Diagram For Movie Booking System
+### Use Case Diagram For Movie Booking System
 
 For Movie Management System We have following use case diagram:
-![use case diagram](Images/FWF_UseCase.jpg)
+![use case diagram](Images/MBS_UseCase.jpg)
