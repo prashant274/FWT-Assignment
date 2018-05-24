@@ -20,13 +20,13 @@ public class ScreenServiceImpl implements ScreenService {
 	public int addScreen(Screen screen) {
 		checkForNullScreenObject(screen);
 		Set<Screen> screenSet = screenDAO.getAllScreen();
-		screenSet = createnNewScreeSetIfNotPresent(screenSet);
+		screenSet = checkForNullScreenSet(screenSet);
 		checkIfThreeScreenAlreadyPresent(screenSet);
 		return addScreenIfNotAlreadyPresent(screen, screenSet);
 	}
 
-	private Set<Screen> createnNewScreeSetIfNotPresent(Set<Screen> screenSet) {
-		if (screenSet == null) {
+	private Set<Screen> checkForNullScreenSet(Set<Screen> screenSet) {
+		if (isObjectNull(screenSet)) {
 			screenSet = new HashSet<Screen>();
 		}
 		return screenSet;
@@ -39,23 +39,24 @@ public class ScreenServiceImpl implements ScreenService {
 	}
 
 	private int addScreenIfNotAlreadyPresent(Screen screen, Set<Screen> screenSet) {
-		if (addToScreenIfNotPresentAlready(screen, screenSet))
+		if (!isScreenAlreadyPresent(screen, screenSet)) {
+			screenDAO.insertScreen(screen);
 			return 1;
-		else
+		} else
 			throw new AlreadyExistException("Screen already exists");
 	}
 
-	private boolean addToScreenIfNotPresentAlready(Screen screen, Set<Screen> screenSet) {
-		return screenSet.add(screen);
+	private boolean isScreenAlreadyPresent(Screen screen, Set<Screen> screenSet) {
+		return screenSet.contains(screen);
 	}
 
 	private void checkForNullScreenObject(Screen screen) {
-		if (isScreenNull(screen)) {
+		if (isObjectNull(screen)) {
 			throw new NullValueException("screen to be add is null");
 		}
 	}
 
-	private boolean isScreenNull(Screen screen) {
+	private boolean isObjectNull(Object screen) {
 		return screen == null;
 	}
 
