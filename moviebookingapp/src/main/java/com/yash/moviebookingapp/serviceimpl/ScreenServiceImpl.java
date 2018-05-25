@@ -3,9 +3,11 @@ package com.yash.moviebookingapp.serviceimpl;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.yash.mbs.exception.AlreadyExistException;
-import com.yash.mbs.exception.NullValueException;
+
 import com.yash.moviebookingapp.dao.ScreenDAO;
+import com.yash.moviebookingapp.exception.AlreadyExistException;
+import com.yash.moviebookingapp.exception.FileNotExistException;
+import com.yash.moviebookingapp.exception.NullValueException;
 import com.yash.moviebookingapp.model.Screen;
 import com.yash.moviebookingapp.service.ScreenService;
 
@@ -17,19 +19,18 @@ public class ScreenServiceImpl implements ScreenService {
 		this.screenDAO = screenDao;
 	}
 
-	public int addScreen(Screen screen) {
+	public int addScreen(Screen screen) throws FileNotExistException {
 		checkForNullScreenObject(screen);
 		Set<Screen> screenSet = screenDAO.getAllScreen();
-		screenSet = checkForNullScreenSet(screenSet);
+		checkForNullScreenSet(screenSet);
 		checkIfThreeScreenAlreadyPresent(screenSet);
 		return addScreenIfNotAlreadyPresent(screen, screenSet);
 	}
 
-	private Set<Screen> checkForNullScreenSet(Set<Screen> screenSet) {
+	private void checkForNullScreenSet(Set<Screen> screenSet) {
 		if (isObjectNull(screenSet)) {
-			screenSet = new HashSet<Screen>();
+			throw new NullValueException("ScrenSet is null");
 		}
-		return screenSet;
 	}
 
 	private void checkIfThreeScreenAlreadyPresent(Set<Screen> screenSet) {
@@ -38,7 +39,7 @@ public class ScreenServiceImpl implements ScreenService {
 		}
 	}
 
-	private int addScreenIfNotAlreadyPresent(Screen screen, Set<Screen> screenSet) {
+	private int addScreenIfNotAlreadyPresent(Screen screen, Set<Screen> screenSet) throws FileNotExistException {
 		if (!isScreenAlreadyPresent(screen, screenSet)) {
 			screenDAO.insertScreen(screen);
 			return 1;

@@ -1,4 +1,4 @@
-package com.yash.mbs.exception;
+package com.yash.moviebookingapp.exception;
 
 public class NullValueException extends NullPointerException {
 
