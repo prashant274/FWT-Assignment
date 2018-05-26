@@ -1,6 +1,6 @@
 package com.yash.moviebookingapp.daoimpl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,15 +55,17 @@ public class ScreenDaoImplTest {
 		assertEquals(screenSetInFile.size(), screenSet.size());
 	}
 
-
-	@Test(expected = FileNotExistException.class)
-	public void insertScreen_FileNotPresent_ThrowFileNotExistException() throws FileNotExistException {
-		String nonExitingFilePath = anyString();
-		String jsonString = anyString();
-		when(fileUtil.writeJsonStringToFile(nonExitingFilePath,jsonString)).thenThrow(FileNotExistException.class);
-		Screen screenToBeAdded=new Screen(101, "Audi101");
+	@Test
+	public void insertScreen_ValidFilePresent_ShouldAddScreenAndReturnOne() throws Exception {
+		String validFilePath="//src//main//resources//screenJson.json";
+		String screenToBeAddedJson="{\"id\":101,\"screenName\":\"Audi1\"}";
+		String alreadyExistScreen="[{\"id\":102,\"screenName\":\"Audi2\"},{\"id\":103,\"screenName\":\"Audi3\"}]";
+		Screen screenToBeAdded=new Screen(103, "Audi103");
+		when(fileUtil.readJsonFile(validFilePath)).thenReturn(alreadyExistScreen);
+		when(fileUtil.writeJsonStringToFile(validFilePath,screenToBeAddedJson)).thenReturn(1);
 		screenDAO.insertScreen(screenToBeAdded);
 	}
 	
 	
+
 }

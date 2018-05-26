@@ -1,11 +1,7 @@
 # FWT-Assignment
 
-### Class Diagram For Movie Booking System
-
-For Movie Management System We have following use case diagram:
-![use case diagram](Images/MBS_ClassDiagram.jpg)
-
-### Use Case Diagram For Movie Booking System
-
-For Movie Management System We have following use case diagram:
-![use case diagram](Images/MBS_UseCase.jpg)
+### Project Increments
+	
+  - Screen Service Added on [24/05/2018]
+  - Screen Dao Added on [25/05/2018]
+  - Movie Service Added on [26/05/2018]

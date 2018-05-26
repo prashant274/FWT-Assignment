@@ -1,15 +1,36 @@
 package com.yash.moviebookingapp.model;
 
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.yash.moviebookingapp.enums.TimeSlot;
+
 public class Screen {
 
 	private int id;
 	private String screenName;
+	private Time availableTimeSlot;
+	private List<Movie> allottedMovies=new ArrayList<Movie>();
+
+	public Time getAvailableTimeSlot() {
+		return availableTimeSlot;
+	}
+
+	public void setAvailableTimeSlot(Time availableTimeSlot) {
+		this.availableTimeSlot = availableTimeSlot;
+	}
 
 	public Screen(int id, String screenName) {
 		this.id = id;
 		this.screenName = screenName;
+		this.availableTimeSlot = Time.valueOf(TimeSlot.DEFAULT.getRequiredTime());
 	}
 
+	public List<Movie> getAllottedMovies() {
+		return allottedMovies;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -38,6 +59,4 @@ public class Screen {
 		return true;
 	}
 
-	
-	
 }

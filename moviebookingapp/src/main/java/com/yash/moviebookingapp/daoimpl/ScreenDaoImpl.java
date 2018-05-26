@@ -24,17 +24,26 @@ public class ScreenDaoImpl implements ScreenDAO {
 
 	public int insertScreen(Screen screenToBeAdded) throws FileNotExistException{
 		Gson gson=new Gson();
-		String screenJson=gson.toJson(screenToBeAdded);
-		fileUtil.writeJsonStringToFile(filePath, screenJson);
-		return 0;
+		int rowsAffected=0;
+		Set<Screen> screenSet=getAllScreen();
+		screenSet.add(screenToBeAdded);
+		String screenSetJson=gson.toJson(screenSet);
+		rowsAffected=fileUtil.writeJsonStringToFile(filePath, screenSetJson);
+		return rowsAffected;
 	}
 
 	public Set<Screen> getAllScreen() throws FileNotExistException,EmptyFileException {
 		String screenJsonString=fileUtil.readJsonFile(filePath);
 		Gson gson=new Gson();
-		Screen[] screensFromJson=gson.fromJson(screenJsonString, Screen[].class);
-		Set<Screen> screenSet=new HashSet<Screen>(Arrays.asList(screensFromJson));
+		Screen[] screensFromJsonFile=gson.fromJson(screenJsonString, Screen[].class);
+		Set<Screen> screenSet=new HashSet<Screen>(Arrays.asList(screensFromJsonFile));
 		return screenSet;
 	}
+
+	public int updateScreen(Screen updatedScreen) throws FileNotExistException, EmptyFileException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 
 }
