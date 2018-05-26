@@ -1,6 +1,7 @@
 package com.yash.moviebookingapp.serviceimpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anySet;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -110,24 +111,28 @@ public class ScreenServiceImplTest {
 	
 	@Test(expected = FileNotExistException.class)
 	public void updateScreen_ScreenJsonFileNotExist_ThrowFileNotExistsException() throws FileNotExistException {
-		when(screenDao.updateScreen(screen)).thenThrow(FileNotExistException.class);
+		Set<Screen> alreadyExistScreenSet = anySet();
+		when(screenDao.updateScreenSet(alreadyExistScreenSet)).thenThrow(FileNotExistException.class);
 		screenService.updateScreen(screen);
 	}
 
 	@Test(expected = EmptyFileException.class)
 	public void updateScreen_ScreenJsonFileEmpty_ThrowEmptyFileException() throws FileNotExistException {
-		when(screenDao.updateScreen(screen)).thenThrow(EmptyFileException.class);
+		Set<Screen> alreadyExistScreenSet =anySet();
+		when(screenDao.updateScreenSet(alreadyExistScreenSet)).thenThrow(EmptyFileException.class);
 		screenService.updateScreen(screen);
 	}
 
 	@Test
-	public void updateScreen_UpdatedScreenPresent_ShuoulRetunOne() throws FileNotExistException {
+	public void updateScreen_UpdatedScreenPresent_ShuoulUpdateScreenSetAndRetunOne() throws FileNotExistException {
+		Set<Screen> alreadyExistScreenSet = anySet();
 		Movie movieToAddScreen = new Movie("Title1", "Production1", Arrays.asList("Actor1", "Actor2"),
 				Time.valueOf("03:00:00"));
 		screen.getAllottedMovies().add(movieToAddScreen);
-		when(screenDao.updateScreen(screen)).thenReturn(1);
+		when(screenDao.updateScreenSet(alreadyExistScreenSet)).thenReturn(1);
 		int rowsAffected=screenService.updateScreen(screen);
 		assertEquals(1, rowsAffected);
 	}
+	
 }
 

@@ -1,10 +1,11 @@
 package com.yash.moviebookingapp.daoimpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -66,6 +67,14 @@ public class ScreenDaoImplTest {
 		screenDAO.insertScreen(screenToBeAdded);
 	}
 	
-	
+	@Test(expected = FileNotExistException.class)
+	public void updateScreen_FileNotPresent_ThrowFileNotExistException() throws FileNotExistException {
+		String nonExitingFilePath = anyString();
+		String jsonString=anyString();
+		Set<Screen> alreadyExistScreenSet = new HashSet(Arrays.asList(new Screen(101, "Audi1"), new Screen(102, "Audi2")));
+		Screen screenToBeUpdate=new Screen(103, "Audi103");
+		when(fileUtil.writeJsonStringToFile(nonExitingFilePath, jsonString)).thenThrow(FileNotExistException.class);
+		screenDAO.updateScreenSet(alreadyExistScreenSet);
+	}
 
 }

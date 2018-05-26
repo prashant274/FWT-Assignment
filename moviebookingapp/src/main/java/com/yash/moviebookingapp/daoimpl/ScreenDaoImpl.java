@@ -40,9 +40,12 @@ public class ScreenDaoImpl implements ScreenDAO {
 		return screenSet;
 	}
 
-	public int updateScreen(Screen updatedScreen) throws FileNotExistException, EmptyFileException {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateScreenSet(Set<Screen> updatedScreen) throws FileNotExistException, EmptyFileException {
+		Gson gson=new Gson();
+		int rowsAffected=0;
+		String updatedScreenJson=gson.toJson(updatedScreen);
+		rowsAffected=fileUtil.writeJsonStringToFile(filePath, updatedScreenJson);
+		return rowsAffected;
 	}
 	
 

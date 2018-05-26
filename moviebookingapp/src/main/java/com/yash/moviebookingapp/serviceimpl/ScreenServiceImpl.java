@@ -47,7 +47,7 @@ public class ScreenServiceImpl implements ScreenService {
 		Set<Screen> screenSet = this.getAllScreen();
 		checkForNullScreenSet(screenSet);
 		updateScreenWithNewScreen(updatedScreen, screenSet);
-		int rowsAffected = screenDAO.updateScreen(updatedScreen);
+		int rowsAffected = screenDAO.updateScreenSet(screenSet);
 		return rowsAffected;
 	}
 

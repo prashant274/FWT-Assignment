@@ -12,6 +12,6 @@ public interface ScreenDAO {
 
 	Set<Screen> getAllScreen() throws FileNotExistException,EmptyFileException;
 
-	int updateScreen(Screen updatedScreen) throws FileNotExistException,EmptyFileException;
+	int updateScreenSet(Set<Screen> updatedScreens) throws FileNotExistException,EmptyFileException;
 
 }
