@@ -8,14 +8,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
-
 import com.yash.moviebookingapp.exception.EmptyFileException;
 import com.yash.moviebookingapp.exception.FileNotExistException;
 
 public class FileUtil {
 
-	private final static Logger logger = Logger.getLogger(FileUtil.class);
+	
 
 	public String readJsonFile(String filePath) throws FileNotExistException {
 		File jsonFile = new File(filePath);
@@ -36,7 +34,20 @@ public class FileUtil {
 				nextReadLine = bufferedReader.readLine();
 			}
 		} catch (IOException ioException) {
-			logger.error("error while reading " + jsonFile.getPath());
+			System.out.println(ioException.getMessage());
+		}
+	}
+	
+	private void readFromBufferedReaderWithFormat(File jsonFile, StringBuilder jsonBuilder, BufferedReader bufferedReader) {
+		String nextReadLine;
+		try {
+			nextReadLine = bufferedReader.readLine();
+			while (isEndOfFile(nextReadLine)) {
+				jsonBuilder.append(nextReadLine+"\n");
+				nextReadLine = bufferedReader.readLine();
+			}
+		} catch (IOException ioException) {
+			System.out.println(ioException.getMessage());
 		}
 	}
 
@@ -81,7 +92,7 @@ public class FileUtil {
 		try {
 			bufferedWriter.write(jsonString);
 		} catch (IOException e) {
-			logger.error("error while writing to file");
+			System.out.println("error while writing to file");
 		} finally {
 			closeResources(bufferedWriter);
 		}
@@ -92,8 +103,7 @@ public class FileUtil {
 		try {
 			bufferedWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Error while closing connection");
 		}
 	}
 
@@ -102,7 +112,7 @@ public class FileUtil {
 		try {
 			bufferedWriter = new BufferedWriter(new FileWriter(jsonFile));
 		} catch (IOException e) {
-			logger.error("error occured while writing json file " + jsonFile.getPath());
+			System.out.println("error occured while writing json file " + jsonFile.getPath());
 		}
 		return bufferedWriter;
 
@@ -113,9 +123,20 @@ public class FileUtil {
 			try {
 				jsonFile.createNewFile();
 			} catch (IOException e) {
-				logger.error("create file if not exist");
+				System.out.println("create file if not exist");
 			}
 		}
 	}
 
+	public String readFile(String filePath) throws FileNotExistException {
+		File jsonFile = new File(filePath);
+		checkIfFileExist(jsonFile);
+		checkForEmptyFile(jsonFile);
+		StringBuilder jsonBuilder = new StringBuilder();
+		BufferedReader	bufferedReader = generateBufferReaderFromjsonFile(jsonFile);
+		readFromBufferedReaderWithFormat(jsonFile, jsonBuilder, bufferedReader);
+		return jsonBuilder.toString();
+	}
+	
+	
 }

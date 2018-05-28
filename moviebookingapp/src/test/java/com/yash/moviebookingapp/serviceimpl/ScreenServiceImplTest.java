@@ -38,13 +38,7 @@ public class ScreenServiceImplTest {
 		screen = new Screen(101, "Audi1");
 	}
 
-	@Test
-	public void addScreen_ScreenObjectGiven_ShouldAddScreenAndReturnOne() throws FileNotExistException {
-		when(screenDao.insertScreen(screen)).thenReturn(1);
-		int rowsAffected = screenService.addScreen(screen);
-		assertEquals(1, rowsAffected);
-	}
-
+	
 	@Test(expected = NullValueException.class)
 	public void addScreen_NullScreenObjectGiven_ThrowNullValueException() throws FileNotExistException {
 		Screen nullScreenObject = null;
@@ -72,6 +66,14 @@ public class ScreenServiceImplTest {
 		screenService.addScreen(screen);
 	}
 
+	
+	@Test
+	public void addScreen_ScreenObjectGiven_ShouldAddScreenAndReturnOne() throws FileNotExistException {
+		when(screenDao.insertScreen(screen)).thenReturn(1);
+		int rowsAffected = screenService.addScreen(screen);
+		assertEquals(1, rowsAffected);
+	}
+	
 	@Test(expected = FileNotExistException.class)
 	public void getAllScreen_ScreenJsonFileNotExist_ThrowFileNotExistsException() throws FileNotExistException {
 		when(screenDao.getAllScreen()).thenThrow(FileNotExistException.class);

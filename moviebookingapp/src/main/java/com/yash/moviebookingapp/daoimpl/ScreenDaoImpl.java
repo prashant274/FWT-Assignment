@@ -15,9 +15,8 @@ import com.yash.moviebookingapp.util.FileUtil;
 public class ScreenDaoImpl implements ScreenDAO {
 
 	private FileUtil fileUtil;
-	private static final String filePath="//src//main//resources//screenJson.json";
-	
-	
+	private static final String filePath="./src/main//resources/jsonFile/screensJson.json";
+		
 	public ScreenDaoImpl(FileUtil fileUtil) {
 		this.fileUtil=fileUtil;
 	}

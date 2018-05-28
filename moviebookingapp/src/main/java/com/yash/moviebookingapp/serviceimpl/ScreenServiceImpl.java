@@ -2,8 +2,6 @@ package com.yash.moviebookingapp.serviceimpl;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
-
 import com.yash.moviebookingapp.dao.ScreenDAO;
 import com.yash.moviebookingapp.exception.AlreadyExistException;
 import com.yash.moviebookingapp.exception.EmptyFileException;
@@ -15,8 +13,6 @@ import com.yash.moviebookingapp.service.ScreenService;
 public class ScreenServiceImpl implements ScreenService {
 
 	private ScreenDAO screenDAO;
-
-	private static final Logger logger = Logger.getLogger(ScreenServiceImpl.class);
 
 	public ScreenServiceImpl(ScreenDAO screenDao) {
 		this.screenDAO = screenDao;

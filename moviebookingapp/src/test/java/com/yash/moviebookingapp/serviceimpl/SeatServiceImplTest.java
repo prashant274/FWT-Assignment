@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.yash.moviebookingapp.dao.SeatDAO;
 import com.yash.moviebookingapp.exception.NullValueException;
+import com.yash.moviebookingapp.model.Seat;
 import com.yash.moviebookingapp.service.SeatService;
 
 public class SeatServiceImplTest {
@@ -22,8 +23,9 @@ public class SeatServiceImplTest {
 	}
 	
 	@Test(expected=NullValueException.class)
-	public void addSeatsToScreen_SeatObjectNullGiven_ThrowNullValueException() {
-		
+	public void addSeatsToScreen_NullSeatObjectGiven_ThrowNullValueException() {
+		Seat nullScreen=null;
+		seatService.addSeatsToScreen(nullScreen);
 	}
 
 }
